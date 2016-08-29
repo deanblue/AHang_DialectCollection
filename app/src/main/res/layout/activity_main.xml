@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:weightSum="1"
+tools:context="com.example.ativbook62014ed.ahang01.MainActivity">
+
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/iv_home"
+    android:layout_weight="0.2"
+    />
+
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="0.8"
+    android:weightSum="1">
+
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/iv_search"
+        android:src="@drawable/search"
+        android:layout_weight="0.5"
+        android:scaleType="fitCenter"
+        android:background="@color/white"/>
+
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/iv_record"
+        android:src="@drawable/record"
+        android:layout_weight="0.5"
+        android:scaleType="fitCenter"
+        android:background="@color/white"/>
+</LinearLayout>
+
+</LinearLayout>
