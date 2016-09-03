@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AHang01</string>
+    <string name="record">녹음</string>
+    <string name="recordStop">녹음정지</string>
+    <string name="play">재생</string>
+    <string name="playStop">재생정지</string>
 </resources>
