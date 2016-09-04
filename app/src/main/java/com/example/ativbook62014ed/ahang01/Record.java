@@ -2,6 +2,7 @@ package com.example.ativbook62014ed.ahang01;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -162,6 +164,23 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
     //함수끝
     private void mBtnStopRecOnClick(){
         if(mRecState == RECORDING){
+            NamePopUpActivity dialog = new NamePopUpActivity(this);     //다이얼로그 사용을 위한 선언
+            dialog.setContentView(R.layout.activity_name_pop_up);
+            WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+            params.width = 1000;
+            params.height = 350;
+            dialog.getWindow().setAttributes(params);
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface $dialog) {
+                    NamePopUpActivity dialog = (NamePopUpActivity) $dialog;
+                    String name = dialog.getName();
+                    File prefile =  new File(mFilePath + mFileName);
+                    mFileName = "/AH_" + name + "Rec.mp4";
+                    prefile.renameTo(new File(mFilePath + mFileName));
+                }
+            });
+            dialog.show();      //다이얼로그 띄우기
             Toast.makeText(Record.this, mTime.getText(), Toast.LENGTH_SHORT).show();
             mBtnStartRec.setClickable(true);
             mBtnStopRec.setClickable(false);
