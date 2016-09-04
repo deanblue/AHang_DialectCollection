@@ -4,4 +4,6 @@
     <string name="recordStop">녹음정지</string>
     <string name="play">재생</string>
     <string name="playStop">재생정지</string>
+
+    <string name="github">깃허브</string>
 </resources>
