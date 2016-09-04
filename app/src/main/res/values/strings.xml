@@ -1,9 +1,17 @@
 <resources>
-    <string name="app_name">AHang01</string>
-    <string name="record">녹음</string>
-    <string name="recordStop">녹음정지</string>
-    <string name="play">재생</string>
-    <string name="playStop">재생정지</string>
+    <string name="app_name">AHang Application</string>
 
-    <string name="github">깃허브</string>
+    <!--녹음 기능 버튼 이름-->
+    <string name="btn_Recording">녹음</string>
+    <string name="btn_sRecording">중지</string>
+    <string name="btn_Play">재생</string>
+    <string name="btn_Stop">중지</string>
+    <string name="btn_Pause">일시정지</string>
+    <string name="btn_Next">다음</string>
+    <string name="btn_Pre">이전</string>
+
+    <!--이름 설정-->
+    <string name="btn_save">저 장</string>
+    <string name="btn_no">취 소</string>
+
 </resources>
