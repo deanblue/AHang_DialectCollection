@@ -7,36 +7,37 @@ import android.graphics.Color;
  */
 public class SearchListItem {
 
-    private int id;
-    private String standardLanguage;
-    private String regionalLanguage;
-    private Color mColor;
+    private int mId;
+    private String mDialect;
+    private int mColor;
+
+    public SearchListItem(int id, String dialect, int color) {
+        mId = id;
+        mDialect = dialect;
+        mColor = color;
+    }
 
     public int getId() {
-        return id;
+        return mId;
     }
 
-    public String getStandardLanguage() {
-        return standardLanguage;
+    public void setId(int id) {
+        mId = id;
     }
 
-    public void setStandardLanguage(String standardLanguage) {
-        this.standardLanguage = standardLanguage;
+    public String getDialect() {
+        return mDialect;
     }
 
-    public String getRegionalLanguage() {
-        return regionalLanguage;
+    public void setDialect(String dialect) {
+        mDialect = dialect;
     }
 
-    public void setRegionalLanguage(String regionalLanguage) {
-        this.regionalLanguage = regionalLanguage;
-    }
-
-    public Color getColor() {
+    public int getColor() {
         return mColor;
     }
 
-    public void setColor(Color color) {
+    public void setColor(int color) {
         mColor = color;
     }
 }
