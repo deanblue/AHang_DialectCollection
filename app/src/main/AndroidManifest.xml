@@ -20,7 +20,7 @@
         </activity>
         <activity android:name=".Record">
         </activity>
-        <activity android:name=".SearchList">
+        <activity android:name=".SearchListActivity">
         </activity>
     </application>
 

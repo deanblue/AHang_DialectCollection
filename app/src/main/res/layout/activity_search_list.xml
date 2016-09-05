@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.ativbook62014ed.ahang01.SearchList">
+    tools:context=".SearchListActivity">
 
     <ListView
         android:layout_width="match_parent"

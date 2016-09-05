@@ -1,58 +1,68 @@
 package com.example.ativbook62014ed.ahang01;
 
 import android.content.Context;
-import android.view.LayoutInflater;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.RadioButton;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 /**
  * Created by ATIV Book 6 2014ED on 2016-09-04.
  */
-/*
 public class SearchListAdapter extends BaseAdapter {
 
-    private ArrayList<SearchListItem> listViewItemList = new ArrayList<SearchListItem>();
+    private Context mContext;
+    private ArrayList<SearchListItem> mDialectList;
 
-    public SearchListAdapter(){
-
+    public SearchListAdapter(Context context, ArrayList<SearchListItem> dialectList) {
+        mContext = context;
+        mDialectList = dialectList;
     }
 
     @Override
     public int getCount() {
-        return listViewItemList.size();
+        return mDialectList.size();
     }
 
     @Override
-    public View getView(int position, View converView, ViewGroup parent) {
-        final int pos = position;
-        final Context context = parent.getContext();
+    public Object getItem(int position) {
+        return mDialectList.get(position);
+    }
 
-        if(converView == null){
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            converView = inflater.inflate(R.layout.search_list_item, parent, false)''
-        }
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
-        TextView tvStandardLanguage = (TextView) converView.findViewById(R.id.tv_standard_language);
-        TextView tvregionalLanguage = (TextView) converView.findViewById(R.id.tv_regional_langage);
-        RadioButton btnColorSelection = (RadioButton) converView.findViewById(R.id.btn_color_selection);
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
 
-        SearchListItem listViewItem = listViewItemList.get(position);
+        SearchListItem item = mDialectList.get(position);
+        View view;
 
-        tvStandardLanguage.setText(listViewItem.getStandardLanguage());
-        tvregionalLanguage.setText(listViewItem.getRegionalLanguage());
-        btnColorSelection.setOnClickListener(new View.OnClickListener() {
+        view = View.inflate(mContext, R.layout.custom_search_list, null);
+
+        TextView dialect = (TextView) view.findViewById(R.id.search_dialect);
+        final ImageView color = (ImageView) view.findViewById(R.id.search_color);
+
+        dialect.setText(item.getDialect());
+        color.setImageResource(item.getColor());
+
+        color.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View v) {
+                ColorPickDialogUtil dialog = new ColorPickDialogUtil(mContext, color);
+                dialog.show();
             }
         });
-
-        return null;
+        return view;
     }
 }
-*/
