@@ -43,7 +43,7 @@ public class SearchListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         SearchListItem item = mDialectList.get(position);
         View view;
@@ -59,7 +59,7 @@ public class SearchListAdapter extends BaseAdapter {
         color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ColorPickDialogUtil dialog = new ColorPickDialogUtil(mContext, color);
+                ColorPickDialogUtil dialog = new ColorPickDialogUtil(mContext, color, mDialectList, position);
                 dialog.show();
             }
         });

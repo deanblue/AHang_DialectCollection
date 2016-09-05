@@ -87,7 +87,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
-
+        
         mTime = (TextView)findViewById(R.id.txt_Time);
 
         mBtnStartRec = (Button)findViewById(R.id.btn_Recording);
