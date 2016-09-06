@@ -101,7 +101,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
         mBtnNext = (Button) findViewById(R.id.btn_Next);
 
         mFilePath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mFilePath += "/AH_DialectCollector";
+        mFilePath += "/AH_DialectCollector/";
         File file = new File(mFilePath);
         file.mkdirs();
 
@@ -175,7 +175,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
     //함수끝
     private void mBtnStopRecOnClick(){
         if(mRecState == RECORDING){
-            NamePopUpActivity dialog = new NamePopUpActivity(this);     //다이얼로그 사용을 위한 선언
+            /*NamePopUpActivity dialog = new NamePopUpActivity(this);     //다이얼로그 사용을 위한 선언
             dialog.setContentView(R.layout.activity_name_pop_up);
             WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
             params.width = 1000;
@@ -187,11 +187,12 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
                     NamePopUpActivity dialog = (NamePopUpActivity) $dialog;
                     String name = dialog.getName();
                     File prefile =  new File(mFilePath + mFileName);
-                    mFileName = "/AH_" + name + "Rec.mp4";
+                    mFileName = "AH_" + name + "_Rec.mp4";
                     prefile.renameTo(new File(mFilePath + mFileName));
                 }
             });
-            dialog.show();      //다이얼로그 띄우기
+            dialog.show();      //다이얼로그 띄우기*/
+
             Toast.makeText(Record.this, mTime.getText(), Toast.LENGTH_SHORT).show();
             mBtnStartRec.setClickable(true);
             mBtnStopRec.setClickable(false);
@@ -214,7 +215,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
             mPlayerState = PLAY_STOP;
             mCurTimeMs = 0;
             mRecState = RECORDING;
-            mFileName = "/AH_" + timeStampFormat.format(new Date()).toString() + "Rec.mp4";
+            mFileName = "AH_" + timeStampFormat.format(new Date()).toString() + "_Rec.mp4";
             startRec();
             updateUI();
         }
@@ -427,6 +428,8 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
         }
         mGps = new GpsInfo(this);
         Intent intent = new Intent(Record.this, GpsMapView.class);
+        intent.putExtra("root_path",mFilePath);
+        intent.putExtra("file_name",mFileName);
         intent.putExtra("Lat", mGps.getLatitude());
         intent.putExtra("Lon", mGps.getLongitude());
         intent.putExtra("Address", mGps.getAddress(getApplicationContext(), mGps.getLatitude(), mGps.getLongitude()));
