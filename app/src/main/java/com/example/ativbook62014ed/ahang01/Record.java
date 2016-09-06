@@ -4,12 +4,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -53,7 +55,9 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
 
     private int mCurTimeMs = 0;  //녹음을 할 때 시간을 나타내는 변수
     private Button mBtnFile;    //파일리스트 띄우는 버튼
+    private Button mBtnNext;
 
+    private GpsInfo mGps;
     //    함수 시작
     Handler mProgressHandler = new Handler(){       //Handler를 통한 녹음 진행바 처리
         public void handleMessage(Message msg){
@@ -94,6 +98,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
         mBtnStopRec = (Button)findViewById(R.id.btn_sRecording);
         mBtnStartPlay = (Button)findViewById(R.id.btn_Play);
         mBtnFile = (Button)findViewById(R.id.btn_File);     //리스트 띄울 버튼
+        mBtnNext = (Button) findViewById(R.id.btn_Next);
 
         mFilePath = Environment.getExternalStorageDirectory().getAbsolutePath();
         mFilePath += "/AH_DialectCollector";
@@ -104,6 +109,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
         mBtnStopRec.setOnClickListener((View.OnClickListener) this);
         mBtnStartPlay.setOnClickListener((View.OnClickListener) this);
         mBtnFile.setOnClickListener((View.OnClickListener) this);
+        mBtnNext.setOnClickListener(this);
 
         mBtnStartRec.setClickable(true);
         mBtnStopRec.setClickable(false);
@@ -152,6 +158,11 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
             case R.id.btn_File:
                 mBtnFileOnClick();
                 break;
+
+            case R.id.btn_Next:
+                nextOnClick();
+                break;
+
             default:
                 break;
         }
@@ -408,4 +419,18 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
             mBtnStartPlay.setText("재생");
     }
 //    함수 끝
+
+    private void nextOnClick(){
+        Log.e("다음버튼클릭","");
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+        mGps = new GpsInfo(this);
+        Intent intent = new Intent(Record.this, GpsMapView.class);
+        intent.putExtra("Lat", mGps.getLatitude());
+        intent.putExtra("Lon", mGps.getLongitude());
+        intent.putExtra("Address", mGps.getAddress(getApplicationContext(), mGps.getLatitude(), mGps.getLongitude()));
+        startActivity(intent);
+        finish();
+    }
 }

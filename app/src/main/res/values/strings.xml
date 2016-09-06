@@ -13,5 +13,11 @@
     <!--이름 설정-->
     <string name="btn_save">저 장</string>
     <string name="btn_no">취 소</string>
+    <string name="btn_Register">등 록</string>
+
+    <!--Edit Text Name-->
+    <string name="hint_standard">표준어</string>
+    <string name="hint_dialect">지역어</string>
+
 
 </resources>
