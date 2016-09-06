@@ -100,7 +100,7 @@ public class SearchListActivity extends AppCompatActivity implements View.OnClic
                     Double getLatitude = Double.parseDouble(order.get("latitude").toString());
                     Double getLongitude = Double.parseDouble(order.get("longitude").toString());
 
-                    mDialectList.add(new SearchListItem(getId, getDialect, R.drawable.black, getLatitude, getLongitude));
+                    mDialectList.add(new SearchListItem(getId, getDialect, R.drawable.black, getLatitude, getLongitude, (float)1.0));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -126,12 +126,9 @@ public class SearchListActivity extends AppCompatActivity implements View.OnClic
                     Log.e(item.getDialect() + "Value", String.valueOf(item.getId()) + "," + String.valueOf(item.getColor()));
                 }
 
-                /*
-                 * 보내는 부분
-                 */
-                /*Intent intent = new Intent(SearchListActivity.this, Record.class);
+                Intent intent = new Intent(SearchListActivity.this, SearchMapView.class);
                 intent.putParcelableArrayListExtra("dialectList", mDialectList);
-                startActivity(intent);*/
+                startActivity(intent);
                 break;
         }
     }

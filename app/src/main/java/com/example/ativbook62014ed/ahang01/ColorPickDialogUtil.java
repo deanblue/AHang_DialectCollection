@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+
 import java.util.ArrayList;
 
 /**
@@ -41,6 +43,10 @@ public class ColorPickDialogUtil extends Dialog {
         this.item.get(position).setColor(colorResource);
     }
 
+    public void setColorFloat(int position, float colorFloat){
+        this.item.get(position).setColorString(colorFloat);
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -60,6 +66,7 @@ public class ColorPickDialogUtil extends Dialog {
             public void onClick(View v) {
                 originImageView.setImageResource(R.drawable.black);
                 setColor(position, R.drawable.black);
+                setColorFloat(position, (float)1.0);
                 dismiss();
             }
         });
@@ -69,6 +76,7 @@ public class ColorPickDialogUtil extends Dialog {
             public void onClick(View v) {
                 originImageView.setImageResource(R.drawable.red);
                 setColor(position, R.drawable.red);
+                setColorFloat(position, BitmapDescriptorFactory.HUE_RED);
                 dismiss();
             }
         });
@@ -78,6 +86,7 @@ public class ColorPickDialogUtil extends Dialog {
             public void onClick(View v) {
                 originImageView.setImageResource(R.drawable.orange);
                 setColor(position, R.drawable.orange);
+                setColorFloat(position, BitmapDescriptorFactory.HUE_ORANGE);
                 dismiss();
             }
         });
@@ -87,6 +96,7 @@ public class ColorPickDialogUtil extends Dialog {
             public void onClick(View v) {
                 originImageView.setImageResource(R.drawable.yellow);
                 setColor(position, R.drawable.yellow);
+                setColorFloat(position, BitmapDescriptorFactory.HUE_YELLOW);
                 dismiss();
             }
         });
@@ -95,6 +105,7 @@ public class ColorPickDialogUtil extends Dialog {
             public void onClick(View v) {
                 originImageView.setImageResource(R.drawable.blue);
                 setColor(position, R.drawable.blue);
+                setColorFloat(position, BitmapDescriptorFactory.HUE_BLUE);
                 dismiss();
             }
         });
@@ -103,6 +114,7 @@ public class ColorPickDialogUtil extends Dialog {
             public void onClick(View v) {
                 originImageView.setImageResource(R.drawable.green);
                 setColor(position, R.drawable.green);
+                setColorFloat(position, BitmapDescriptorFactory.HUE_GREEN);
                 dismiss();
             }
         });
@@ -111,6 +123,7 @@ public class ColorPickDialogUtil extends Dialog {
             public void onClick(View v) {
                 originImageView.setImageResource(R.drawable.purple);
                 setColor(position, R.drawable.purple);
+                setColorFloat(position, BitmapDescriptorFactory.HUE_VIOLET);
                 dismiss();
             }
         });
@@ -119,6 +132,7 @@ public class ColorPickDialogUtil extends Dialog {
             public void onClick(View v) {
                 originImageView.setImageResource(R.drawable.pink);
                 setColor(position, R.drawable.pink);
+                setColorFloat(position, BitmapDescriptorFactory.HUE_ROSE);
                 dismiss();
             }
         });

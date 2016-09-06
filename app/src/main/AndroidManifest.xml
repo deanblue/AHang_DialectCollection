@@ -42,6 +42,8 @@
 
         <activity android:name=".GpsMapView">
         </activity>
+        <activity android:name=".SearchMapView">
+        </activity>
     </application>
 
 </manifest>

@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.android.gms.maps.model.BitmapDescriptor;
+
 
 /**
  * Created by ATIV Book 6 2014ED on 2016-09-04.
@@ -15,7 +17,7 @@ public class SearchListItem implements Parcelable {
     private int mColor;
     private double mLatitude;
     private double mLongitude;
-
+    private float mColorString;
 
     public SearchListItem(Parcel in) {
         this.mId = in.readInt();
@@ -23,6 +25,7 @@ public class SearchListItem implements Parcelable {
         this.mColor = in.readInt();
         this.mLatitude = in.readDouble();
         this.mLongitude = in.readDouble();
+        this.mColorString = in.readFloat();
     }
 
     @Override
@@ -37,6 +40,7 @@ public class SearchListItem implements Parcelable {
         dest.writeInt(this.mColor);
         dest.writeDouble(this.mLatitude);
         dest.writeDouble(this.mLongitude);
+        dest.writeFloat(this.getColorString());
 
     }
 
@@ -51,12 +55,13 @@ public class SearchListItem implements Parcelable {
 
 
 
-    public SearchListItem(int id, String dialect, int color, double latitude, double longitude) {
+    public SearchListItem(int id, String dialect, int color, double latitude, double longitude, float colorString) {
         mId = id;
         mDialect = dialect;
         mColor = color;
         mLatitude = latitude;
         mLongitude = longitude;
+        mColorString = colorString;
     }
 
     public int getId() {
@@ -97,5 +102,13 @@ public class SearchListItem implements Parcelable {
 
     public void setLongitude(double longitude) {
         mLongitude = longitude;
+    }
+
+    public float getColorString() {
+        return mColorString;
+    }
+
+    public void setColorString(float colorString) {
+        mColorString = colorString;
     }
 }
