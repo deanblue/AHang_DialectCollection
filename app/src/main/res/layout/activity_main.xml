@@ -8,37 +8,50 @@ android:orientation="vertical"
 android:weightSum="1"
 tools:context="com.example.ativbook62014ed.ahang01.MainActivity">
 
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/iv_home"
-    android:layout_weight="0.2"
-    />
-
-<LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="0.8"
-    android:weightSum="1">
-
-    <ImageButton
+    <LinearLayout
+        android:id="@+id/main_layout_record"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/iv_search"
-        android:src="@drawable/search"
         android:layout_weight="0.5"
-        android:scaleType="fitCenter"
-        android:background="@color/white"/>
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@android:color/holo_blue_dark">
 
-    <ImageButton
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_margin="32dp"
+            android:src="@mipmap/ic_record"/>
+
+        <TextView
+            android:textSize="25dp"
+            android:text="녹음하기"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_layout_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/iv_record"
-        android:src="@drawable/record"
         android:layout_weight="0.5"
-        android:scaleType="fitCenter"
-        android:background="@color/white"/>
-</LinearLayout>
+        android:orientation="horizontal"
+        android:gravity="center">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_margin="32dp"
+            android:src="@mipmap/ic_search"/>
+
+        <TextView
+            android:textSize="25dp"
+            android:text="검색하기"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
 
 </LinearLayout>

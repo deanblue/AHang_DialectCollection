@@ -1,19 +1,25 @@
 package com.example.ativbook62014ed.ahang01;
 
 import android.content.Intent;
+import android.net.LinkAddress;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private ImageButton btn_search;
-    private ImageButton btn_record;
+    private LinearLayout record_layout;
+    private LinearLayout search_layout;
 
     void init(){
-        btn_search = (ImageButton) findViewById(R.id.iv_search);
-        btn_record = (ImageButton) findViewById(R.id.iv_record);
+        record_layout = (LinearLayout) findViewById(R.id.main_layout_record);
+        search_layout = (LinearLayout) findViewById(R.id.main_layout_search);
+
+        record_layout.setOnClickListener(this);
+        search_layout.setOnClickListener(this);
+
     }
 
     @Override
@@ -23,29 +29,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         init();
 
-        btn_record.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Record.class);
-                startActivity(intent);
-            }
-        });
-
-        btn_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SearchListActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()) {
             case R.id.search_color:
                 Toast.makeText(this, "요거", Toast.LENGTH_SHORT);
+                break;
+
+            case R.id.main_layout_record :
+                intent = new Intent(MainActivity.this, Record.class);
+                startActivity(intent);
+                finish();
+                break;
+
+            case R.id.main_layout_search :
+                intent = new Intent(MainActivity.this, SearchListActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+
         }
     }
 }

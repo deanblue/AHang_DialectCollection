@@ -1,11 +1,14 @@
 package com.example.ativbook62014ed.ahang01;
 
 import android.app.Dialog;
+import android.app.SearchableInfo;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+
+import java.util.ArrayList;
 
 /**
  * Created by Lai.OH on 2016-09-05.
@@ -23,11 +26,19 @@ public class ColorPickDialogUtil extends Dialog {
     private ImageView purple;
     private ImageView pink;
 
+    private ArrayList<SearchListItem> item;
+    int position;
 
-    public ColorPickDialogUtil(Context context, ImageView imageview) {
+    public ColorPickDialogUtil(Context context, ImageView imageview, ArrayList<SearchListItem> item, int position) {
         super(context);
 
         this.originImageView = imageview;
+        this.item = item;
+        this.position = position;
+    }
+
+    public void setColor(int position, int colorResource) {
+        this.item.get(position).setColor(colorResource);
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +59,7 @@ public class ColorPickDialogUtil extends Dialog {
             @Override
             public void onClick(View v) {
                 originImageView.setImageResource(R.drawable.black);
+                setColor(position, R.drawable.black);
                 dismiss();
             }
         });
@@ -56,6 +68,7 @@ public class ColorPickDialogUtil extends Dialog {
             @Override
             public void onClick(View v) {
                 originImageView.setImageResource(R.drawable.red);
+                setColor(position, R.drawable.red);
                 dismiss();
             }
         });
@@ -64,6 +77,7 @@ public class ColorPickDialogUtil extends Dialog {
             @Override
             public void onClick(View v) {
                 originImageView.setImageResource(R.drawable.orange);
+                setColor(position, R.drawable.orange);
                 dismiss();
             }
         });
@@ -72,6 +86,7 @@ public class ColorPickDialogUtil extends Dialog {
             @Override
             public void onClick(View v) {
                 originImageView.setImageResource(R.drawable.yellow);
+                setColor(position, R.drawable.yellow);
                 dismiss();
             }
         });
@@ -79,6 +94,7 @@ public class ColorPickDialogUtil extends Dialog {
             @Override
             public void onClick(View v) {
                 originImageView.setImageResource(R.drawable.blue);
+                setColor(position, R.drawable.blue);
                 dismiss();
             }
         });
@@ -86,6 +102,7 @@ public class ColorPickDialogUtil extends Dialog {
             @Override
             public void onClick(View v) {
                 originImageView.setImageResource(R.drawable.green);
+                setColor(position, R.drawable.green);
                 dismiss();
             }
         });
@@ -93,6 +110,7 @@ public class ColorPickDialogUtil extends Dialog {
             @Override
             public void onClick(View v) {
                 originImageView.setImageResource(R.drawable.purple);
+                setColor(position, R.drawable.purple);
                 dismiss();
             }
         });
@@ -100,6 +118,7 @@ public class ColorPickDialogUtil extends Dialog {
             @Override
             public void onClick(View v) {
                 originImageView.setImageResource(R.drawable.pink);
+                setColor(position, R.drawable.pink);
                 dismiss();
             }
         });
