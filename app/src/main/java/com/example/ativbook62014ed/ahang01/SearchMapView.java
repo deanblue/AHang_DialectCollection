@@ -137,9 +137,9 @@ public class SearchMapView extends AppCompatActivity implements OnMapReadyCallba
         Log.e("Click Marker Id : ", marker.getSnippet());
         Log.e("Click Marker Dialect", marker.getTitle());
 
-/*
+
         AudioDetailInfo http = new AudioDetailInfo();
-        http.execute(marker.getSnippet());*/
+        http.execute(marker.getSnippet());
         return true;
     }
 
@@ -148,11 +148,13 @@ public class SearchMapView extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
-    class AudioDetailInfo extends AsyncTask<String, Void, Void> {
+    class AudioDetailInfo extends AsyncTask<String, Void, String> {
 
         final String SERVER_URL = "http://210.117.181.66:8080/AHang/audio_detail_info.php";
         RequestHandler rh = new RequestHandler();
         private ProgressDialog loading;
+
+        private Context mContext = SearchMapView.this;
 
         int getId;
         String getAudioPath;
@@ -170,8 +172,8 @@ public class SearchMapView extends AppCompatActivity implements OnMapReadyCallba
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
 
             Log.e("id : ", Integer.toString(getId));
             Log.e("audioPath : ", getAudioPath);
@@ -179,11 +181,13 @@ public class SearchMapView extends AppCompatActivity implements OnMapReadyCallba
             Log.e("dialect : ", getDialect);
             Log.e("getAddress : ", getAddress);
 
+            RecordDetailInfoDialogUtil dialog = new RecordDetailInfoDialogUtil(this.mContext, getStandard, getDialect, getAddress);
+            dialog.show();
             loading.dismiss();
         }
 
         @Override
-        protected Void doInBackground(String... params) {
+        protected String doInBackground(String... params) {
 
 
             HashMap<String,String> data = new HashMap<>();
@@ -210,7 +214,7 @@ public class SearchMapView extends AppCompatActivity implements OnMapReadyCallba
                 e.printStackTrace();
             }
 
-            return null;
+            return result;
         }
     }
 }
