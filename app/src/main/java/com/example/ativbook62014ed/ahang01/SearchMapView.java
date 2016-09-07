@@ -2,13 +2,16 @@ package com.example.ativbook62014ed.ahang01;
 
 import android.*;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -30,8 +33,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SearchMapView extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener {
 
@@ -46,6 +53,8 @@ public class SearchMapView extends AppCompatActivity implements OnMapReadyCallba
     private double mLat;
     private double mLon;
     private String mNowAddressKorea;
+
+    private Context mContext;
 
     int count=0;
 
@@ -91,9 +100,8 @@ public class SearchMapView extends AppCompatActivity implements OnMapReadyCallba
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.title(markerItem.getDialect());
         markerOptions.position(position);
-        /*markerOptions.icon(BitmapDescriptorFactory.fromResource(markerItem.getColor()));*/
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(markerItem.getColorString()));
-        /*markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, marker_root_view)));*/
+        markerOptions.snippet(Integer.toString(markerItem.getId()));
 
         Log.e("Marker id : ", Integer.toString(markerItem.getId()));
         Log.e("Marker dialect : ", markerItem.getDialect());
@@ -126,11 +134,83 @@ public class SearchMapView extends AppCompatActivity implements OnMapReadyCallba
 
         CameraUpdate center = CameraUpdateFactory.newLatLng(marker.getPosition());
         mGoogleMap.animateCamera(center);
+        Log.e("Click Marker Id : ", marker.getSnippet());
+        Log.e("Click Marker Dialect", marker.getTitle());
+
+/*
+        AudioDetailInfo http = new AudioDetailInfo();
+        http.execute(marker.getSnippet());*/
         return true;
     }
 
     @Override
     public void onMapClick(LatLng latLng) {
 
+    }
+
+    class AudioDetailInfo extends AsyncTask<String, Void, Void> {
+
+        final String SERVER_URL = "http://210.117.181.66:8080/AHang/audio_detail_info.php";
+        RequestHandler rh = new RequestHandler();
+        private ProgressDialog loading;
+
+        int getId;
+        String getAudioPath;
+        String getStandard;
+        String getDialect;
+        String getAddress;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading = new ProgressDialog(SearchMapView.this);
+            loading.setMessage("목록 불러오는중...");
+            loading.setCancelable(false);
+            loading.show();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            Log.e("id : ", Integer.toString(getId));
+            Log.e("audioPath : ", getAudioPath);
+            Log.e("standard : ", getStandard);
+            Log.e("dialect : ", getDialect);
+            Log.e("getAddress : ", getAddress);
+
+            loading.dismiss();
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+
+
+            HashMap<String,String> data = new HashMap<>();
+
+            String id = params[0];
+
+            data.put("audio_id", id);
+            String result = rh.sendPostRequest(SERVER_URL,data);
+            Log.e("result Data", result.toString());
+
+            try {
+                JSONArray ja = new JSONArray(result);
+                for (int i = 0; i < ja.length(); i++) {
+                    JSONObject order = ja.getJSONObject(i);
+
+                    getId = Integer.parseInt(order.get("id").toString());
+                    getAudioPath = order.get("audio_path").toString();
+                    getStandard = order.get("standard").toString();
+                    getDialect = order.get("dialect").toString();
+                    getAddress = order.get("address").toString();
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
     }
 }

@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -100,7 +102,7 @@ public class SearchListActivity extends AppCompatActivity implements View.OnClic
                     Double getLatitude = Double.parseDouble(order.get("latitude").toString());
                     Double getLongitude = Double.parseDouble(order.get("longitude").toString());
 
-                    mDialectList.add(new SearchListItem(getId, getDialect, R.drawable.black, getLatitude, getLongitude, (float)1.0));
+                    mDialectList.add(new SearchListItem(getId, getDialect, R.drawable.cyan, getLatitude, getLongitude, BitmapDescriptorFactory.HUE_CYAN));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

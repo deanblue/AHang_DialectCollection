@@ -64,9 +64,9 @@ public class ColorPickDialogUtil extends Dialog {
         black.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                originImageView.setImageResource(R.drawable.black);
-                setColor(position, R.drawable.black);
-                setColorFloat(position, (float)1.0);
+                originImageView.setImageResource(R.drawable.cyan);
+                setColor(position, R.drawable.cyan);
+                setColorFloat(position, BitmapDescriptorFactory.HUE_CYAN);
                 dismiss();
             }
         });

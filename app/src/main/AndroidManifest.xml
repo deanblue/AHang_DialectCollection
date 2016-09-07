@@ -44,6 +44,8 @@
         </activity>
         <activity android:name=".SearchMapView">
         </activity>
+        <activity android:name=".DialectDetailDialog">
+        </activity>
     </application>
 
 </manifest>
