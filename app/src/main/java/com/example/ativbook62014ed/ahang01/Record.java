@@ -436,4 +436,12 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
         startActivity(intent);
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(Record.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

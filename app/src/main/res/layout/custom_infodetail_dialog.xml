@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:layout_margin="16dp">
+
+            <TextView
+                android:id="@+id/detail_standard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="표준어 : "/>
+
+            <TextView
+                android:id="@+id/detail_dialect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="지역어 : "
+                />
+
+        </LinearLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/detail_record"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/ic_record"
+            android:layout_marginRight="16dp"
+            android:layout_weight="0.2"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/detail_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="주소 : "
+        android:layout_margin="16dp"/>
+
+
+
+</LinearLayout>

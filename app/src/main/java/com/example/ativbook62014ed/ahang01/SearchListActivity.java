@@ -134,4 +134,12 @@ public class SearchListActivity extends AppCompatActivity implements View.OnClic
                 break;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(SearchListActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
