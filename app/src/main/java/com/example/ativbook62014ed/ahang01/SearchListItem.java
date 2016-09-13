@@ -13,18 +13,22 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 public class SearchListItem implements Parcelable {
 
     private int mId;
+    private int mCheck;
     private String mDialect;
     private int mColor;
     private double mLatitude;
     private double mLongitude;
+    private String mAddress;
     private float mColorString;
 
     public SearchListItem(Parcel in) {
         this.mId = in.readInt();
+        this.mCheck = in.readInt();
         this.mDialect = in.readString();
         this.mColor = in.readInt();
         this.mLatitude = in.readDouble();
         this.mLongitude = in.readDouble();
+        this.mAddress = in.readString();
         this.mColorString = in.readFloat();
     }
 
@@ -36,10 +40,12 @@ public class SearchListItem implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.mId);
+        dest.writeInt(this.mCheck);
         dest.writeString(this.mDialect);
         dest.writeInt(this.mColor);
         dest.writeDouble(this.mLatitude);
         dest.writeDouble(this.mLongitude);
+        dest.writeString(this.mAddress);
         dest.writeFloat(this.getColorString());
 
     }
@@ -55,12 +61,14 @@ public class SearchListItem implements Parcelable {
 
 
 
-    public SearchListItem(int id, String dialect, int color, double latitude, double longitude, float colorString) {
+    public SearchListItem(int id, int check, String dialect, int color, double latitude, double longitude, String address, float colorString) {
         mId = id;
+        mCheck = check;
         mDialect = dialect;
         mColor = color;
         mLatitude = latitude;
         mLongitude = longitude;
+        mAddress = address;
         mColorString = colorString;
     }
 
@@ -70,6 +78,14 @@ public class SearchListItem implements Parcelable {
 
     public void setId(int id) {
         mId = id;
+    }
+
+    public int getCheck() {
+        return mCheck;
+    }
+
+    public void setCheck(int check) {
+        mCheck = check;
     }
 
     public String getDialect() {
@@ -110,5 +126,13 @@ public class SearchListItem implements Parcelable {
 
     public void setColorString(float colorString) {
         mColorString = colorString;
+    }
+
+    public String getAddress() {
+        return mAddress;
+    }
+
+    public void setAddress(String address) {
+        mAddress = address;
     }
 }

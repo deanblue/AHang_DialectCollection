@@ -1,28 +1,25 @@
 package com.example.ativbook62014ed.ahang01;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 /**
- * Created by ATIV Book 6 2014ED on 2016-09-04.
+ * Created by Lai.OH on 2016-09-13.
  */
-public class SearchListAdapter extends BaseAdapter {
+public class SearchDialectListAdapter extends BaseAdapter {
 
     private Context mContext;
     private ArrayList<SearchListItem> mDialectList;
 
-    public SearchListAdapter(Context context, ArrayList<SearchListItem> dialectList) {
+    public SearchDialectListAdapter(Context context, ArrayList<SearchListItem> dialectList) {
         mContext = context;
         mDialectList = dialectList;
     }
@@ -48,21 +45,15 @@ public class SearchListAdapter extends BaseAdapter {
         SearchListItem item = mDialectList.get(position);
         View view;
 
-        view = View.inflate(mContext, R.layout.custom_search_list, null);
+        view = View.inflate(mContext, R.layout.custom_search_dialect_list, null);
 
-        TextView dialect = (TextView) view.findViewById(R.id.search_dialect);
-        final ImageView color = (ImageView) view.findViewById(R.id.search_color);
+
+        TextView dialect = (TextView) view.findViewById(R.id.search_dialect_dialect);
+        TextView address = (TextView) view.findViewById(R.id.search_dialect_address);
 
         dialect.setText(item.getDialect());
-        color.setImageResource(item.getColor());
+        address.setText(item.getAddress());
 
-        color.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ColorPickDialogUtil dialog = new ColorPickDialogUtil(mContext, color, mDialectList, position);
-                dialog.show();
-            }
-        });
         return view;
     }
 }
