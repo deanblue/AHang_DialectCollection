@@ -44,7 +44,7 @@
         </activity>
         <activity android:name=".SearchMapView">
         </activity>
-        <activity android:name=".DialectDetailDialog">
+        <activity android:name=".SearchDialectListActivity" android:theme="@style/Theme.AppCompat.Transparent">
         </activity>
     </application>
 

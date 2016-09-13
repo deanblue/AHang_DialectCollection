@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,10 +28,14 @@ public class SearchListActivity extends AppCompatActivity implements View.OnClic
     private Button search_button;
     private ImageView mapview_button;
 
-    private SearchListAdapter mAdapter;
+    private SearchStandardListAdapter mStandardAdapter;
+    private SearchDialectListAdapter mDialectAdapter;
     private ArrayList<SearchListItem> mDialectList;
 
+    private ArrayList<SearchListItem> mMapViewList;
 
+    private ArrayList<String> getDialectList;
+    private ArrayList<Float> getColorList;
 
     @Override
 
@@ -50,14 +55,26 @@ public class SearchListActivity extends AppCompatActivity implements View.OnClic
         search_button.setOnClickListener(this);
         mapview_button.setOnClickListener(this);
 
+
         mDialectList = new ArrayList<>();
+        mMapViewList = new ArrayList<>();
 
-
+        getDialectList = new ArrayList<>();
+        getColorList = new ArrayList<>();
+        /*dialect_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SearchListItem item = (SearchListItem) parent.getItemAtPosition(position);
+                Intent intent = new Intent(SearchListActivity.this, SearchDialectListActivity.class);
+                intent.putExtra("dialect", item.getDialect());
+                startActivity(intent);
+            }
+        });*/
     }
 
-    class QueryMessageThread extends AsyncTask<String, Void, Void> {
+    class QueryStandardThread extends AsyncTask<String, Void, Void> {
 
-        final String SERVER_URL = "http://210.117.181.66:8080/AHang/search_dialect_list.php";
+        final String SERVER_URL = "http://210.117.181.66:8080/AHang/search_standard_list.php";
         RequestHandler rh = new RequestHandler();
         private ProgressDialog loading;
 
@@ -73,9 +90,8 @@ public class SearchListActivity extends AppCompatActivity implements View.OnClic
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            mAdapter = new SearchListAdapter(SearchListActivity.this, mDialectList);
-            dialect_listview.setAdapter(mAdapter);
-
+            mStandardAdapter = new SearchStandardListAdapter(SearchListActivity.this, mDialectList);
+            dialect_listview.setAdapter(mStandardAdapter);
             loading.dismiss();
         }
 
@@ -94,15 +110,16 @@ public class SearchListActivity extends AppCompatActivity implements View.OnClic
             mDialectList.clear();
             try {
                 JSONArray ja = new JSONArray(result);
+                Log.e("ja.length()", String.valueOf(ja.length()));
                 for (int i = 0; i < ja.length(); i++) {
                     JSONObject order = ja.getJSONObject(i);
 
-                    int getId = Integer.parseInt(order.get("id").toString());
+                    //int getId = Integer.parseInt(order.get("id").toString());
                     String getDialect = order.get("dialect").toString();
-                    Double getLatitude = Double.parseDouble(order.get("latitude").toString());
-                    Double getLongitude = Double.parseDouble(order.get("longitude").toString());
+                    //Double getLatitude = Double.parseDouble(order.get("latitude").toString());
+                    //Double getLongitude = Double.parseDouble(order.get("longitude").toString());
 
-                    mDialectList.add(new SearchListItem(getId, getDialect, R.drawable.cyan, getLatitude, getLongitude, BitmapDescriptorFactory.HUE_CYAN));
+                    mDialectList.add(new SearchListItem(1, 0, getDialect, R.drawable.cyan, 1.1, 1.1,"", BitmapDescriptorFactory.HUE_CYAN));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -112,28 +129,108 @@ public class SearchListActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.search_button :
-                QueryMessageThread query = new QueryMessageThread();
+                QueryStandardThread query = new QueryStandardThread();
                 query.execute(search_query_edt.getText().toString());
                 search_query_edt.setText("");
                 break;
 
             case R.id.go_mapview_button :
+
+                getDialectList.clear();
+
                 Log.e("mapview gogogogo", "gogogogo");
                 for (SearchListItem item :
                         mDialectList) {
-                    Log.e(item.getDialect() + "Value", String.valueOf(item.getId()) + "," + String.valueOf(item.getColor()));
+                    if (item.getCheck() == 1) {
+                        getDialectList.add(item.getDialect());
+                        getColorList.add(item.getColorString());
+                    }
                 }
 
-                Intent intent = new Intent(SearchListActivity.this, SearchMapView.class);
-                intent.putParcelableArrayListExtra("dialectList", mDialectList);
-                startActivity(intent);
+                GetDialectInfoTask task = new GetDialectInfoTask();
+                task.execute();
+
                 break;
         }
     }
+
+    class GetDialectInfoTask extends AsyncTask<String, Void, Void> {
+
+        final String SERVER_URL = "http://210.117.181.66:8080/AHang/mapview_info_list.php";
+        RequestHandler rh = new RequestHandler();
+        private ProgressDialog loading;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading = new ProgressDialog(SearchListActivity.this);
+            loading.setMessage("방언지도 준비중...");
+            loading.setCancelable(false);
+            loading.show();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Intent intent = new Intent(SearchListActivity.this, SearchMapView.class);
+            intent.putParcelableArrayListExtra("dialectList", mMapViewList);
+            startActivity(intent);
+            loading.dismiss();
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+
+
+            HashMap<String,String> data = new HashMap<>();
+
+            data.put("size", String.valueOf(getDialectList.size()));
+            for(int i = 0; i < getDialectList.size(); i++) {
+                data.put("data" + String.valueOf(i), getDialectList.get(i));
+                //data.put("color" + String.valueOf(i), String.valueOf(getColorList.get(i)));
+            }
+            String result = rh.sendPostRequest(SERVER_URL,data);
+            Log.e("result Data", result.toString());
+
+            mMapViewList.clear();
+            try {
+                JSONArray ja = new JSONArray(result);
+                Log.e("ja.length()", String.valueOf(ja.length()));
+                for (int i = 0; i < ja.length(); i++) {
+                    JSONObject order = ja.getJSONObject(i);
+
+                    int getId = Integer.parseInt(order.get("id").toString());
+                    String getDialect = order.get("dialect").toString();
+                    Log.e("지역어", order.getString("dialect").toString());
+                    Double getLatitude = Double.parseDouble(order.get("latitude").toString());
+                    Double getLongitude = Double.parseDouble(order.get("longitude").toString());
+                    String getAddress = order.get("address").toString();
+                    int getColor = 0;
+                    float getColorString = 0;
+
+                    for(int k = 0; k < mDialectList.size(); k++) {
+                        if (getDialect.equals(mDialectList.get(k).getDialect())) {
+                            getColor = mDialectList.get(k).getColor();
+                            getColorString = mDialectList.get(k).getColorString();
+                            break;
+                        }
+                    }
+                    mMapViewList.add(new SearchListItem(getId, 0, getDialect, getColor, getLatitude, getLongitude,getAddress, getColorString));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
