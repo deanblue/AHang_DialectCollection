@@ -181,7 +181,7 @@ public class SearchMapView extends AppCompatActivity implements OnMapReadyCallba
             Log.e("dialect : ", getDialect);
             Log.e("getAddress : ", getAddress);
 
-            RecordDetailInfoDialogUtil dialog = new RecordDetailInfoDialogUtil(this.mContext, getStandard, getDialect, getAddress);
+            RecordDetailInfoDialogUtil dialog = new RecordDetailInfoDialogUtil(this.mContext, getAudioPath, getStandard, getDialect, getAddress);
             dialog.show();
             loading.dismiss();
         }
