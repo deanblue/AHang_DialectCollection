@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.example.ativbook62014ed.ahang01"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.example.ativbook62014ed.ahang01">
 
     <permission
         android:name="com.example.ativbook62014ed.ahang01.locationapi.maps.permission.MAPS_RECEIVE"
@@ -24,12 +24,15 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+
+        <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".Record">
         </activity>
@@ -44,8 +47,11 @@
         </activity>
         <activity android:name=".SearchMapView">
         </activity>
-        <activity android:name=".SearchDialectListActivity" android:theme="@style/Theme.AppCompat.Transparent">
+        <activity
+            android:name=".SearchDialectListActivity"
+            android:theme="@style/Theme.AppCompat.Transparent">
         </activity>
+
     </application>
 
 </manifest>
