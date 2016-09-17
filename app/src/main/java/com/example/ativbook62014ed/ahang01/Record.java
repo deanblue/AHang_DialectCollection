@@ -54,7 +54,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
     private String mFilePath = null;
 
     private int mCurTimeMs = 0;  //녹음을 할 때 시간을 나타내는 변수
-    private Button mBtnFile;    //파일리스트 띄우는 버튼
+//    private Button mBtnFile;    //파일리스트 띄우는 버튼
     private Button mBtnNext;
 
     private GpsInfo mGps;
@@ -91,13 +91,13 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
-        
+
         mTime = (TextView)findViewById(R.id.txt_Time);
 
         mBtnStartRec = (Button)findViewById(R.id.btn_Recording);
         mBtnStopRec = (Button)findViewById(R.id.btn_sRecording);
         mBtnStartPlay = (Button)findViewById(R.id.btn_Play);
-        mBtnFile = (Button)findViewById(R.id.btn_File);     //리스트 띄울 버튼
+//        mBtnFile = (Button)findViewById(R.id.btn_File);     //리스트 띄울 버튼
         mBtnNext = (Button) findViewById(R.id.btn_Next);
 
         mFilePath = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -108,7 +108,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
         mBtnStartRec.setOnClickListener((View.OnClickListener) this);
         mBtnStopRec.setOnClickListener((View.OnClickListener) this);
         mBtnStartPlay.setOnClickListener((View.OnClickListener) this);
-        mBtnFile.setOnClickListener((View.OnClickListener) this);
+//        mBtnFile.setOnClickListener((View.OnClickListener) this);
         mBtnNext.setOnClickListener(this);
 
         mBtnStartRec.setClickable(true);
@@ -155,9 +155,9 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
             case R.id.btn_Play:
                 mBtnStartPlayOnClick();
                 break;
-            case R.id.btn_File:
+/*            case R.id.btn_File:
                 mBtnFileOnClick();
-                break;
+                break;*/
 
             case R.id.btn_Next:
                 nextOnClick();
@@ -167,11 +167,11 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
                 break;
         }
     }
-    private void mBtnFileOnClick(){
+/*    private void mBtnFileOnClick(){
         Toast.makeText(this, "성공?", Toast.LENGTH_SHORT).show();
-//        Intent intent = new Intent(this, FileBrowser.class);
-//        startActivity(intent);
-    }
+        Intent intent = new Intent(this, FileBrowser.class);
+        startActivity(intent);
+    }*/
     //함수끝
     private void mBtnStopRecOnClick(){
         if(mRecState == RECORDING){
@@ -194,6 +194,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
             dialog.show();      //다이얼로그 띄우기*/
 
             Toast.makeText(Record.this, mTime.getText(), Toast.LENGTH_SHORT).show();
+            mBtnStartRec.setBackgroundResource(R.drawable.rec);
             mBtnStartRec.setClickable(true);
             mBtnStopRec.setClickable(false);
             mBtnStartPlay.setClickable(true);
@@ -208,6 +209,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
     private void mBtnStartRecOnClick(){     //녹음 버튼을 눌렀을때 녹음 시작및 중지
         if(mRecState == REC_STOP){
             Toast.makeText(Record.this, "녹음 시작", Toast.LENGTH_SHORT).show();
+            mBtnStartRec.setBackgroundResource(R.drawable.recing);
             mBtnStartRec.setClickable(false);
             mBtnStopRec.setClickable(true);
             mBtnStartPlay.setClickable(false);
@@ -403,7 +405,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
 
     //    함수 시작
     private void updateUI(){
-        if(mRecState == REC_STOP){
+/*        if(mRecState == REC_STOP){
             mBtnStartRec.setText("녹음");
 //            mRecProgressBar.setProgress(0);
         }
@@ -417,7 +419,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
         else if(mPlayerState == PLAYING)
             mBtnStartPlay.setText("일시정지");
         else if(mPlayerState == PLAY_PAUSE)
-            mBtnStartPlay.setText("재생");
+            mBtnStartPlay.setText("재생");*/
     }
 //    함수 끝
 
