@@ -3,7 +3,8 @@
               android:orientation="vertical"
               android:gravity="center"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="#ebeaea">
 
     <LinearLayout
         android:orientation="vertical"
@@ -14,7 +15,7 @@
         <ImageView
             android:layout_gravity="center"
             android:layout_width="261dp"
-            android:layout_height="348dp"
+            android:layout_height="300dp"
             android:src="@drawable/microphone_147081_640"
             android:id="@+id/imageView"/>
 
@@ -41,46 +42,40 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_Play"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginRight="20dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@drawable/play"
             android:id="@+id/btn_Play"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_Recording"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@drawable/rec"
             android:id="@+id/btn_Recording"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_sRecording"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="20dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@drawable/stop"
             android:id="@+id/btn_sRecording"/>
     </TableRow>
 
     <TableRow
         android:gravity="center"
+        android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="목록"
-            android:id="@+id/btn_File"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/btn_Next"
             android:id="@+id/btn_Next"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_Pre"
-            android:id="@+id/btn_Back"/>
 
     </TableRow>
 
