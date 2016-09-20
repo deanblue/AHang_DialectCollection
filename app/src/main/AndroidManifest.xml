@@ -7,6 +7,7 @@
         android:protectionLevel="signature"/>
 
     <uses-permission android:name="com.example.ativbook62014ed.ahang01.locationapi.maps.permission.MAPS_RECEIVE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.INTERNET"/>
