@@ -25,6 +25,8 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -100,8 +102,8 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
 //        mBtnFile = (Button)findViewById(R.id.btn_File);     //리스트 띄울 버튼
         mBtnNext = (Button) findViewById(R.id.btn_Next);
 
-        mFilePath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mFilePath += "/AH_DialectCollector/";
+        mFilePath = getApplicationContext().getFilesDir().getAbsolutePath();
+        mFilePath += "/AH_DialectCollector";
         File file = new File(mFilePath);
         file.mkdirs();
 
@@ -117,8 +119,8 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
 
         new TedPermission(this)
                 .setPermissionListener(permissionlistener)
-                .setRationaleMessage("구글 로그인을 하기 위해서는 주소록 접근 권한이 필요해요")
-                .setDeniedMessage("왜 거부하셨어요...\n하지만 [설정] > [권한] 에서 권한을 허용할 수 있어요.")
+                .setRationaleMessage("녹음을 하기위해서 마이크와 저장소 접근 권한이 필요합니다.")
+                .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
                 .setPermissions(Manifest.permission.READ_CONTACTS)
                 .check();
     }
@@ -217,7 +219,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
             mPlayerState = PLAY_STOP;
             mCurTimeMs = 0;
             mRecState = RECORDING;
-            mFileName = "AH_" + timeStampFormat.format(new Date()).toString() + "_Rec.mp4";
+            mFileName = "/AH_" + timeStampFormat.format(new Date()).toString() + "_Rec.mp4";
             startRec();
             updateUI();
         }
@@ -276,6 +278,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
     private void mBtnStartPlayOnClick(){    //재생 시작버튼
         if(mPlayerState == PLAY_STOP){  //정지되어 있으면 시작
             Toast.makeText(Record.this, "재생 시작", Toast.LENGTH_SHORT).show();
+            mBtnStartPlay.setBackgroundResource(R.drawable.pause);
             mBtnStartRec.setClickable(false);
             mBtnStopRec.setClickable(true);
             mBtnStartPlay.setClickable(true);
@@ -288,12 +291,14 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
         }
         else if(mPlayerState == PLAYING){   //재생 중이면 일시 정지
             Toast.makeText(Record.this, "일시정지", Toast.LENGTH_SHORT).show();
+            mBtnStartPlay.setBackgroundResource(R.drawable.play);
             mPlayerState = PLAY_PAUSE;
             pausePlay();
             updateUI();
         }
         else if(mPlayerState == PLAY_PAUSE){    //일시 정지면 재생 시작
             Toast.makeText(Record.this, "재생 시작", Toast.LENGTH_SHORT).show();
+            mBtnStartPlay.setBackgroundResource(R.drawable.pause);
             mPlayerState = PLAYING;
             startPlay();
             updateUI();
@@ -305,6 +310,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
     private void mBtnStopPlayOnClick(){
         if(mPlayerState == PLAYING || mPlayerState == PLAY_PAUSE){
             Toast.makeText(Record.this, "재생 중지", Toast.LENGTH_SHORT).show();
+            mBtnStartPlay.setBackgroundResource(R.drawable.play);
             mBtnStartRec.setClickable(true);
             mBtnStopRec.setClickable(true);
             mBtnStartPlay.setClickable(true);
@@ -334,6 +340,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
                 mStopState = 0;
                 mTime.setText("00:00");
                 Toast.makeText(Record.this, "재생 종료", Toast.LENGTH_SHORT).show();
+                mBtnStartPlay.setBackgroundResource(R.drawable.play);
                 mPlayerState = PLAY_STOP;
                 stopPlay();
                 releaseMediaPlayer();   //무슨 함수인가?
@@ -343,7 +350,9 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
         String fullFilePath = mFilePath + mFileName;
 
         try{
-            mPlayer.setDataSource(fullFilePath);        //실제 파일에 접근을 하는 것
+            FileInputStream fis = new FileInputStream(fullFilePath);
+            FileDescriptor fd = fis.getFD();
+            mPlayer.setDataSource(fd);        //실제 파일에 접근을 하는 것
             mPlayer.prepare();
         }
         catch (Exception e){
