@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AHang Application</string>
+    <string name="app_name">뭐꼬!?</string>
 
     <!--녹음 기능 버튼 이름-->
     <string name="btn_Recording">녹음</string>

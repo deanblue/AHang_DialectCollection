@@ -46,6 +46,7 @@ public class GpsMapView extends AppCompatActivity implements OnMapReadyCallback 
 
     private static LatLng nowAddress;
     private GoogleMap mGoogleMap;
+    private GpsInfo mGps;
 
     private double mLat;
     private double mLon;
@@ -86,12 +87,25 @@ public class GpsMapView extends AppCompatActivity implements OnMapReadyCallback 
             return;
         }
         mGoogleMap.setMyLocationEnabled(true);
+
         Marker nowPosition = mGoogleMap.addMarker(new MarkerOptions().position(nowAddress).title(mNowAddressKorea));
 
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(nowAddress, 15));
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
         tv_nowAddress.setText(mNowAddressKorea);
+
+        mGps = new GpsInfo(this);
+
+        mGoogleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+            @Override
+            public boolean onMyLocationButtonClick() {
+                mNowAddressKorea = mGps.getAddress(getApplicationContext(), mGps.getLatitude(), mGps.getLongitude());
+                tv_nowAddress.setText(mNowAddressKorea);
+                Log.e("change address", mNowAddressKorea);
+                return true;
+            }
+        });
     }
 
     @Override
