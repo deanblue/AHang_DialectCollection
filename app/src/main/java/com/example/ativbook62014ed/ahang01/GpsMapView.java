@@ -280,4 +280,12 @@ public class GpsMapView extends AppCompatActivity implements OnMapReadyCallback 
             return result;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(GpsMapView.this, Record.class);
+        startActivity(intent);
+        finish();
+    }
 }

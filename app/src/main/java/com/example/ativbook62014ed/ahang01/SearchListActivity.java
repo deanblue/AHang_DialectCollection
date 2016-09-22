@@ -3,6 +3,7 @@ package com.example.ativbook62014ed.ahang01;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,7 @@ public class SearchListActivity extends AppCompatActivity implements View.OnClic
     private EditText search_query_edt;
     private Button search_button;
     private ImageView mapview_button;
+    private Button btn_colorChange;
 
     private SearchStandardListAdapter mStandardAdapter;
     private SearchDialectListAdapter mDialectAdapter;
@@ -36,6 +38,8 @@ public class SearchListActivity extends AppCompatActivity implements View.OnClic
 
     private ArrayList<String> getDialectList;
     private ArrayList<Float> getColorList;
+
+    private boolean confirm = true;
 
     @Override
 
@@ -52,8 +56,10 @@ public class SearchListActivity extends AppCompatActivity implements View.OnClic
         search_query_edt = (EditText) findViewById(R.id.search_query_edt);
         search_button = (Button) findViewById(R.id.search_button);
         mapview_button = (ImageView) findViewById(R.id.go_mapview_button);
+        btn_colorChange = (Button) findViewById(R.id.search_color_change);
         search_button.setOnClickListener(this);
         mapview_button.setOnClickListener(this);
+        btn_colorChange.setOnClickListener(this);
 
 
         mDialectList = new ArrayList<>();
@@ -138,6 +144,7 @@ public class SearchListActivity extends AppCompatActivity implements View.OnClic
                 QueryStandardThread query = new QueryStandardThread();
                 query.execute(search_query_edt.getText().toString());
                 search_query_edt.setText("");
+                btn_colorChange.setEnabled(true);
                 break;
 
             case R.id.go_mapview_button :
@@ -156,6 +163,12 @@ public class SearchListActivity extends AppCompatActivity implements View.OnClic
                 GetDialectInfoTask task = new GetDialectInfoTask();
                 task.execute();
 
+                break;
+
+            case R.id.search_color_change :
+                change_color();
+                mStandardAdapter = new SearchStandardListAdapter(SearchListActivity.this, mDialectList);
+                dialect_listview.setAdapter(mStandardAdapter);
                 break;
         }
     }
@@ -231,6 +244,66 @@ public class SearchListActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    private void change_color(){
+        if (confirm){
+            confirm = false;
+            btn_colorChange.setText(R.string.btn_change_one);
+            int count = mDialectList.size();
+            for(int i=0; i<count; i++){
+                switch (i%10){
+                    case 0 :
+                        mDialectList.get(i).setColorString(BitmapDescriptorFactory.HUE_RED);
+                        mDialectList.get(i).setColor(R.drawable.red);
+                        break;
+                    case 1 :
+                        mDialectList.get(i).setColorString(BitmapDescriptorFactory.HUE_ROSE);
+                        mDialectList.get(i).setColor(R.drawable.pink);
+                        break;
+                    case 2 :
+                        mDialectList.get(i).setColorString(BitmapDescriptorFactory.HUE_MAGENTA);
+                        mDialectList.get(i).setColor(R.drawable.magenta);
+                        break;
+                    case 3 :
+                        mDialectList.get(i).setColorString(BitmapDescriptorFactory.HUE_VIOLET);
+                        mDialectList.get(i).setColor(R.drawable.purple);
+                        break;
+                    case 4 :
+                        mDialectList.get(i).setColorString(BitmapDescriptorFactory.HUE_CYAN);
+                        mDialectList.get(i).setColor(R.drawable.cyan);
+                        break;
+                    case 5 :
+                        mDialectList.get(i).setColorString(BitmapDescriptorFactory.HUE_AZURE);
+                        mDialectList.get(i).setColor(R.drawable.azure);
+                        break;
+                    case 6 :
+                        mDialectList.get(i).setColorString(BitmapDescriptorFactory.HUE_BLUE);
+                        mDialectList.get(i).setColor(R.drawable.blue);
+                        break;
+                    case 7 :
+                        mDialectList.get(i).setColorString(BitmapDescriptorFactory.HUE_GREEN);
+                        mDialectList.get(i).setColor(R.drawable.green);
+                        break;
+                    case 8 :
+                        mDialectList.get(i).setColorString(BitmapDescriptorFactory.HUE_YELLOW);
+                        mDialectList.get(i).setColor(R.drawable.yellow);
+                        break;
+                    case 9 :
+                        mDialectList.get(i).setColorString(BitmapDescriptorFactory.HUE_ORANGE);
+                        mDialectList.get(i).setColor(R.drawable.orange);
+                        break;
+                }
+            }
+        }
+        else{
+            confirm = true;
+            btn_colorChange.setText(R.string.btn_change_random);
+            int count = mDialectList.size();
+            for(int i=0; i<count; i++){
+                mDialectList.get(i).setColorString(BitmapDescriptorFactory.HUE_CYAN);
+                mDialectList.get(i).setColor(R.drawable.cyan);
+            }
+        }
+    }
 
     @Override
     public void onBackPressed() {

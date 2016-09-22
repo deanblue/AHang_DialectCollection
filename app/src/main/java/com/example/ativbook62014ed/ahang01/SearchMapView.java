@@ -217,4 +217,12 @@ public class SearchMapView extends AppCompatActivity implements OnMapReadyCallba
             return result;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(SearchMapView.this, SearchListActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

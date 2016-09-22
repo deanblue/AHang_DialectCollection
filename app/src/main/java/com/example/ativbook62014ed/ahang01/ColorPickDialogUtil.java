@@ -9,6 +9,7 @@ import android.view.Window;
 import android.widget.ImageView;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.plus.model.people.Person;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,8 @@ public class ColorPickDialogUtil extends Dialog {
     private ImageView green;
     private ImageView purple;
     private ImageView pink;
+    private ImageView azure;
+    private ImageView magenta;
 
     private ArrayList<SearchListItem> item;
     int position;
@@ -60,6 +63,8 @@ public class ColorPickDialogUtil extends Dialog {
         green = (ImageView) findViewById(R.id.color_dialog_green);
         purple = (ImageView) findViewById(R.id.color_dialog_purple);
         pink = (ImageView) findViewById(R.id.color_dialog_pink);
+        azure = (ImageView) findViewById(R.id.color_dialog_azure);
+        magenta = (ImageView) findViewById(R.id.color_dialog_magenta);
 
         black.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +138,24 @@ public class ColorPickDialogUtil extends Dialog {
                 originImageView.setImageResource(R.drawable.pink);
                 setColor(position, R.drawable.pink);
                 setColorFloat(position, BitmapDescriptorFactory.HUE_ROSE);
+                dismiss();
+            }
+        });
+        azure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                originImageView.setImageResource(R.drawable.azure);
+                setColor(position, R.drawable.azure);
+                setColorFloat(position, BitmapDescriptorFactory.HUE_AZURE);
+                dismiss();
+            }
+        });
+        magenta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                originImageView.setImageResource(R.drawable.magenta);
+                setColor(position, R.drawable.magenta);
+                setColorFloat(position, BitmapDescriptorFactory.HUE_MAGENTA);
                 dismiss();
             }
         });

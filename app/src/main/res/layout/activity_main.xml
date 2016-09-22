@@ -8,27 +8,7 @@ android:orientation="vertical"
 android:weightSum="1"
 tools:context="com.example.ativbook62014ed.ahang01.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/main_layout_record"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.5"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="@android:color/holo_blue_dark">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_margin="32dp"
-            android:src="@mipmap/ic_record"/>
-
-        <TextView
-            android:textSize="25dp"
-            android:text="녹음하기"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/main_layout_search"
@@ -52,6 +32,28 @@ tools:context="com.example.ativbook62014ed.ahang01.MainActivity">
             android:layout_height="wrap_content"/>
 
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_layout_record"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@android:color/holo_blue_dark">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_margin="32dp"
+            android:src="@mipmap/ic_record"/>
+
+        <TextView
+            android:textSize="25dp"
+            android:text="녹음하기"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </LinearLayout>

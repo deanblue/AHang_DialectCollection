@@ -30,7 +30,7 @@
         android:layout_height="40dp"
         android:layout_marginRight="16dp"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/black"
+        android:src="@drawable/cyan"
         android:layout_weight="0.3"/>
 
 </LinearLayout>
