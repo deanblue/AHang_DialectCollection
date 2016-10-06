@@ -97,7 +97,7 @@ public class SearchDialectListActivity extends AppCompatActivity {
                     String getDialect = order.get("dialect").toString();
                     Double getLatitude = Double.parseDouble(order.get("latitude").toString());
                     Double getLongitude = Double.parseDouble(order.get("longitude").toString());
-                    String getAddress = order.get("address").toString();
+                    String getAddress = order.get("do").toString();
 
                     mItem.add(new SearchListItem(getId, 0,getDialect, R.drawable.cyan, getLatitude, getLongitude,getAddress, BitmapDescriptorFactory.HUE_CYAN));
                 }

@@ -6,7 +6,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,19 +44,21 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
-public class GpsMapView extends AppCompatActivity implements OnMapReadyCallback {
+public class GpsMapView extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private static LatLng nowAddress;
     private GoogleMap mGoogleMap;
     private GpsInfo mGps;
+
+    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
 
     private double mLat;
     private double mLon;
     private String mNowAddressKorea;
     private String mRoot_path;
     private String mFile_name;
-    private String mStandard;
-    private String mDialect;
+    private String mStandard = null;
+    private String mDialect = null;
 
 
     private TextView tv_nowAddress;
@@ -67,6 +71,13 @@ public class GpsMapView extends AppCompatActivity implements OnMapReadyCallback 
         et_standard = (EditText) findViewById(R.id.et_standard);
         et_dialect = (EditText) findViewById(R.id.et_dialect);
         btn_register = (Button) findViewById(R.id.btn_register);
+
+        btn_register.setOnClickListener(this);
+
+        String filePath = getApplicationContext().getFilesDir().getAbsolutePath();
+        filePath += "/AH_DialectCollector";
+        File filedir = new File(filePath);
+        filedir.mkdirs();
     }
 
     @Override
@@ -113,21 +124,75 @@ public class GpsMapView extends AppCompatActivity implements OnMapReadyCallback 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gps_map_view);
 
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+            }
+            else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+            }
+        }
+        else {
+            /*initLayout();*/
+        }
+
         init();
 
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        btn_register.setOnClickListener(new View.OnClickListener() {
+       /* btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mStandard = et_standard.getText().toString();
                 mDialect = et_dialect.getText().toString();
 
+                if(mStandard.equals(null)){
+                    Toast.makeText(this, "표준어를 입력해주세요", Toast.LENGTH_SHORT).show();
+                }
+
                 UploadFileTask upfile = new UploadFileTask();
                 upfile.execute(mRoot_path, mFile_name);
             }
-        });
+        });*/
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.btn_register :
+                mStandard = et_standard.getText().toString();
+                mDialect = et_dialect.getText().toString();
+
+                if(mNowAddressKorea.equals("현재 위치를 확인 할 수 없습니다.")){
+                    Toast.makeText(this, "내 위치 버튼을 눌러주세요", Toast.LENGTH_SHORT).show();
+                }
+                if(et_standard.getText().toString().equals("") || et_dialect.getText().toString().equals("")){
+                    Toast.makeText(this, "모든 정보를 입력해주세요", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                else{
+                    UploadFileTask upfile = new UploadFileTask();
+                    upfile.execute(mRoot_path, mFile_name);
+                    break;
+                }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case MY_PERMISSIONS_REQUEST_READ_CONTACTS : {
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    /*initLayout();*/
+                }
+                else {
+                    Toast.makeText(GpsMapView.this, "권한사용을 동의해주셔야 녹음듣기가 가능합니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                return;
+            }
+        }
     }
 
     private String readStream(InputStream in) {
@@ -278,6 +343,7 @@ public class GpsMapView extends AppCompatActivity implements OnMapReadyCallback 
             String latitude = params[3];
             String longitude = params[4];
             String address = params[5];
+            String addressdo[] = address.split("\\s");
 
 
             HashMap<String,String> data = new HashMap<>();
@@ -288,6 +354,8 @@ public class GpsMapView extends AppCompatActivity implements OnMapReadyCallback 
             data.put("latitude", latitude);
             data.put("longitude", longitude);
             data.put("address",address);
+            data.put("do",addressdo[1]);
+            Log.e("do", addressdo[1]);
 
             String result = rh.sendPostRequest(urlString, data);
 

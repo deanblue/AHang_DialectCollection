@@ -77,7 +77,7 @@ public class RecordDetailInfoDialogUtil extends Dialog {
                 //record path에서 filename만 뽑아냄
                 String[] array = mRecordPath.split("/");
                 filename = array[array.length - 1];
-                File file = new File(Environment.getExternalStorageDirectory().getPath() + "/AH_DialectCollector/" + filename);
+                File file = new File(mContext.getFilesDir().getAbsolutePath() + "/AH_DialectCollector/" + filename);
 
                 // Check if the Music file already exists
                 if (file.exists()) {
@@ -137,7 +137,7 @@ public class RecordDetailInfoDialogUtil extends Dialog {
                 // input stream to read file - with 8k buffer
                 InputStream input = new BufferedInputStream(url.openStream(),10*1024);
                 // Output stream to write file in SD card
-                OutputStream output = new FileOutputStream(Environment.getExternalStorageDirectory().getPath()+ "/AH_DialectCollector/" + filename);
+                OutputStream output = new FileOutputStream(mContext.getFilesDir().getAbsolutePath()+ "/AH_DialectCollector/" + filename);
                 byte data[] = new byte[1024];
                 long total = 0;
                 while ((count = input.read(data)) != -1) {
@@ -179,7 +179,7 @@ public class RecordDetailInfoDialogUtil extends Dialog {
     // Play Music
     protected void playMusic(){
         // Read Mp3 file present under SD card
-        Uri myUri1 = Uri.parse(Environment.getExternalStorageDirectory().getPath()+ "/AH_DialectCollector/" + filename);
+        Uri myUri1 = Uri.parse(mContext.getFilesDir().getAbsolutePath()+ "/AH_DialectCollector/" + filename);
         mPlayer  = new MediaPlayer();
         mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {

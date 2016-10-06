@@ -104,6 +104,7 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
 
         mFilePath = getApplicationContext().getFilesDir().getAbsolutePath();
         mFilePath += "/AH_DialectCollector";
+        Log.e("FIle Path : ", mFilePath);
         File file = new File(mFilePath);
         file.mkdirs();
 
@@ -117,12 +118,12 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
         mBtnStopRec.setClickable(false);
         mBtnStartPlay.setClickable(false);
 
-        new TedPermission(this)
+        /*new TedPermission(this)
                 .setPermissionListener(permissionlistener)
                 .setRationaleMessage("녹음을 하기위해서 마이크와 저장소 접근 권한이 필요합니다.")
                 .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
                 .setPermissions(Manifest.permission.READ_CONTACTS)
-                .check();
+                .check();*/
     }
 
 
@@ -162,8 +163,14 @@ public class Record extends Activity implements View.OnClickListener, MediaPlaye
                 break;*/
 
             case R.id.btn_Next:
-                nextOnClick();
-                break;
+                if(mFileName == null){
+                    Toast.makeText(this, "녹음 파일이 없습니다. 녹음해 주세요", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                else {
+                    nextOnClick();
+                    break;
+                }
 
             default:
                 break;
